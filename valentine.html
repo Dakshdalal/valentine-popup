@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <title>Be My Valentine 💘</title>
 
-  <!-- Cookie font for heading -->
-  <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-
+  <!-- Beaming font -->
   <style>
-    /* Beaming font (you must have Beaming.ttf in same folder) */
     @font-face {
-      font-family: "Beaming";
-      src: url("Beaming.ttf") format("truetype");
+      font-family: 'Beaming';
+      src: url('Beaming.ttf') format('truetype');
+    }
+
+    body, h1, button {
+      font-family: 'Beaming', sans-serif;
     }
 
     body {
@@ -21,7 +22,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Beaming', cursive; /* default Beaming for body */
       overflow: hidden;
       position: relative;
     }
@@ -38,20 +38,18 @@
     }
 
     h1 {
-      font-family: 'Cookie', cursive; /* Cookie font for heading only */
-      font-size: 36px;
+      font-size: 30px;
       color: #e6005c;
       margin-bottom: 20px;
     }
 
     button {
       padding: 10px 25px;
-      font-size: 20px;
+      font-size: 18px;
       margin: 10px;
       border-radius: 20px;
       border: none;
       cursor: pointer;
-      font-family: 'Beaming', cursive; /* Beaming for buttons */
       font-weight: bold;
       text-transform: uppercase;
     }
@@ -69,29 +67,18 @@
       top: 120px;
     }
 
+    /* floating Valentine items behind the box */
     .valentine-item {
       position: absolute;
       font-size: 30px;
       opacity: 0.7;
-      z-index: 1;
+      z-index: 1; /* behind box */
       animation: float 6s linear infinite;
     }
 
     @keyframes float {
       0% { transform: translateY(100vh) rotate(0deg);}
       100% { transform: translateY(-50px) rotate(360deg);}
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 1;}
-      100% { transform: translateY(-300px) scale(1.5); opacity: 0;}
-    }
-
-    @keyframes bounceIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      60% { transform: scale(1.2); opacity: 1; }
-      80% { transform: scale(0.95); }
-      100% { transform: scale(1); }
     }
   </style>
 </head>
@@ -104,77 +91,36 @@
     <button id="no">No 💔</button>
   </div>
 
+  <!-- Floating Valentine items -->
   <div class="valentine-item" style="left:5%; animation-delay:0s;">💖</div>
   <div class="valentine-item" style="left:15%; animation-delay:1s;">🌹</div>
   <div class="valentine-item" style="left:25%; animation-delay:2s;">🍫</div>
+  <div class="valentine-item" style="left:35%; animation-delay:3s;">🧸</div>
+  <div class="valentine-item" style="left:45%; animation-delay:4s;">💕</div>
+  <div class="valentine-item" style="left:55%; animation-delay:2s;">💘</div>
+  <div class="valentine-item" style="left:65%; animation-delay:1s;">🌹</div>
+  <div class="valentine-item" style="left:75%; animation-delay:3s;">🍫</div>
+  <div class="valentine-item" style="left:85%; animation-delay:4s;">🧸</div>
+  <div class="valentine-item" style="left:95%; animation-delay:0s;">🤗</div>
 
   <script>
     const noBtn = document.getElementById("no");
     const box = document.querySelector(".box");
 
+    // Make the NO button run inside the box
     noBtn.addEventListener("mouseover", function() {
       const maxX = box.clientWidth - noBtn.offsetWidth;
       const maxY = box.clientHeight - noBtn.offsetHeight;
+
       const x = Math.random() * maxX;
       const y = Math.random() * maxY;
+
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
     });
 
     function yesClicked() {
-      const modal = document.createElement("div");
-      modal.style.position = "fixed";
-      modal.style.top = "0";
-      modal.style.left = "0";
-      modal.style.width = "100%";
-      modal.style.height = "100%";
-      modal.style.background = "rgba(255,182,193,0.8)";
-      modal.style.display = "flex";
-      modal.style.justifyContent = "center";
-      modal.style.alignItems = "center";
-      modal.style.zIndex = "10";
-      modal.style.flexDirection = "column";
-
-      const message = document.createElement("div");
-      message.style.background = "white";
-      message.style.padding = "30px";
-      message.style.borderRadius = "20px";
-      message.style.textAlign = "center";
-      message.style.boxShadow = "0 10px 25px rgba(0,0,0,0.2)";
-      message.style.fontSize = "32px";
-      message.style.fontFamily = "Beaming, cursive"; // Beaming for modal
-      message.style.animation = "bounceIn 0.6s ease";
-
-      message.innerHTML = `💖 <strong>YAY! I knew you'd say yes!</strong> <span style="font-size:48px;">💖<br><span style="color:red; font-weight:bold;">I love you Nanu ♥️💋</span>`;
-
-      const closeBtn = document.createElement("button");
-      closeBtn.innerText = "Close 🌸";
-      closeBtn.style.marginTop = "20px";
-      closeBtn.style.padding = "10px 20px";
-      closeBtn.style.fontSize = "20px";
-      closeBtn.style.border = "none";
-      closeBtn.style.background = "#3399ff";
-      closeBtn.style.color = "white";
-      closeBtn.style.cursor = "pointer";
-      closeBtn.style.fontFamily = "Beaming, cursive";
-
-      closeBtn.onclick = () => document.body.removeChild(modal);
-
-      message.appendChild(closeBtn);
-      modal.appendChild(message);
-      document.body.appendChild(modal);
-
-      for(let i=0; i<15; i++){
-        const heart = document.createElement("div");
-        heart.innerText = "💖";
-        heart.style.position = "absolute";
-        heart.style.fontSize = Math.random()*24+12+"px";
-        heart.style.left = Math.random()*100+"%";
-        heart.style.top = "100%";
-        heart.style.animation = `floatUp ${3+Math.random()*2}s linear forwards`;
-        heart.style.animationDelay = Math.random()*1+"s";
-        modal.appendChild(heart);
-      }
+      alert("💖 <strong>YAY! I knew you'd say yes!</strong> 🤗 I love you Nanu ♥️💋");
     }
   </script>
 
